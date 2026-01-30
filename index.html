@@ -3,69 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <title>Simple Calculator</title>
+
     <style>
         body {
-
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
             margin: 0;
-        }
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-    
         .box {
-            background: #121212;
-            color: #e6e6e6
-            padding: 40px;
-            border-radius: 0;
-            box-shadow: none;
             width: 100%;
             height: 100%;
-            max-width: none;
+            padding: 40px;
+            box-sizing: border-box;
+            background: rgba(15, 15, 30, 0.85);
+            color: #eaeaff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 15px;
         }
 
-
         h2 {
-            margin-top: 0;
             text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #b8c6ff;
         }
 
         input[type="number"] {
-            width: 100%;
-            padding: 6px;
-            margin-bottom: 10px;
+            background: #1b1f3b;
+            color: #eaeaff;
+            border: 1px solid #3a3f7a;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 16px;
         }
 
-        .options {
-            margin-bottom: 10px;
+        .options label {
+            cursor: pointer;
+            color: #cfd8ff;
         }
 
         button {
             display: block;
-            width: 30%;
-            min-width: 160px;
-            margin: 20px auto;
-            padding: 10px;
-            background: #1f6feb;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+            width: 30vw;
+            max-width: 320px;
+            min-width: 180px;
+            margin: 25px auto;
+            padding: 12px;
             font-size: 16px;
-            
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            color: #051018;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.4);
         }
 
         button.loading {
-            pointer-events: none;
             opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 10px;
+            color: #9efeff;
         }
 
         .spinner {
             display: inline-block;
             width: 16px;
             height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid white;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-top: 2px solid #051018;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-right: 8px;
@@ -77,18 +100,9 @@
                 transform: rotate(360deg);
             }
         }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        .result {
-            margin-top: 10px;
-            font-weight: bold;
-            text-align: center;
-        }
     </style>
 </head>
+
 <body>
 
 <div class="box">
@@ -105,10 +119,7 @@
         </label>
     </div>
 
-    <button id="calcBtn" onclick="calculateWithLoading()">
-        Calculate
-    </button>
-
+    <button id="calcBtn" onclick="calculateWithLoading()">Calculate</button>
 
     <div class="result" id="result"></div>
 </div>
@@ -122,12 +133,10 @@
         const btn = document.getElementById("calcBtn");
         const result = document.getElementById("result");
 
-        // Show loading state
         btn.classList.add("loading");
         btn.innerHTML = '<span class="spinner"></span>Loading...';
         result.textContent = "";
 
-        // Wait exactly 2.34 seconds
         setTimeout(() => {
             calculate();
             btn.classList.remove("loading");
@@ -144,12 +153,9 @@
             return;
         }
 
-        let step1;
-        if (option === "a") {
-            step1 = roundDownTwo(input * 0.75);
-        } else {
-            step1 = roundDownTwo(input * 0.68);
-        }
+        let step1 = option === "a"
+            ? roundDownTwo(input * 0.75)
+            : roundDownTwo(input * 0.68);
 
         const final = roundDownTwo(step1 * 0.965);
 
@@ -158,10 +164,5 @@
     }
 </script>
 
-
 </body>
 </html>
-
-
-
-
