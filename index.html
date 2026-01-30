@@ -14,7 +14,8 @@
 
     
         .box {
-            background: purple;
+            background: #121212;
+            color: #e6e6e6
             padding: 40px;
             border-radius: 0;
             box-shadow: none;
@@ -40,13 +41,41 @@
         }
 
         button {
+            display: block;
             width: 30%;
-            padding: 8px;
-            background: #007bff;
+            min-width: 160px;
+            margin: 20px auto;
+            padding: 10px;
+            background: #1f6feb;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
+            font-size: 16px;
+            
+        }
+
+        button.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         button:hover {
@@ -76,7 +105,10 @@
         </label>
     </div>
 
-    <button onclick="calculate()">Calculate</button>
+    <button id="calcBtn" onclick="calculateWithLoading()">
+        Calculate
+    </button>
+
 
     <div class="result" id="result"></div>
 </div>
@@ -84,6 +116,23 @@
 <script>
     function roundDownTwo(num) {
         return Math.floor(num * 100) / 100;
+    }
+
+    function calculateWithLoading() {
+        const btn = document.getElementById("calcBtn");
+        const result = document.getElementById("result");
+
+        // Show loading state
+        btn.classList.add("loading");
+        btn.innerHTML = '<span class="spinner"></span>Loading...';
+        result.textContent = "";
+
+        // Wait exactly 2.34 seconds
+        setTimeout(() => {
+            calculate();
+            btn.classList.remove("loading");
+            btn.innerHTML = "Calculate";
+        }, 2340);
     }
 
     function calculate() {
@@ -109,8 +158,10 @@
     }
 </script>
 
+
 </body>
 </html>
+
 
 
 
